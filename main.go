@@ -32,7 +32,7 @@ func main() {
 )
 
 var (
-	windowSize = fyne.NewSize(800., 600.)
+	windowSize = fyne.NewSize(900., 400.)
 
 	inputData = binding.NewString()
 	srcPane   fyne.CanvasObject

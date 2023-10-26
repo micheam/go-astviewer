@@ -2,7 +2,7 @@
 
 Desktop application that displays the AST nodes of Go language parsing results.
 
-<img src="screenshot.png" alt="screenshot" width="400px" />
+![screenshot](screenshot.png)
 
 ## Usage
 
