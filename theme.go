@@ -7,7 +7,6 @@
 package main
 
 import (
-	"fmt"
 	"image/color"
 
 	"fyne.io/fyne/v2"
@@ -17,7 +16,14 @@ import (
 type mytheme struct{}
 
 func (m *mytheme) Color(n fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
-	return theme.DefaultTheme().Color(n, v)
+	defaultTheme := theme.DefaultTheme()
+	switch n {
+	default:
+		return defaultTheme.Color(n, v)
+	case theme.ColorNameDisabled:
+		return color.RGBA{R: 0xab, G: 0xab, B: 0xab, A: 0xff}
+	}
+
 }
 
 func (m *mytheme) Font(s fyne.TextStyle) fyne.Resource {
@@ -37,24 +43,34 @@ func (m *mytheme) Icon(n fyne.ThemeIconName) fyne.Resource {
 func (m *mytheme) Size(n fyne.ThemeSizeName) float32 {
 	switch n {
 	default:
-		fyne.LogError("ThemeColorName  not found", fmt.Errorf("sizename: %s", n))
 		return theme.DefaultTheme().Size(n)
 	case theme.SizeNameSeparatorThickness:
 		return 1
 	case theme.SizeNameInlineIcon:
-		return 9
+		return 20
+	case theme.SizeNameInnerPadding:
+		return 8
+	case theme.SizeNameLineSpacing:
+		return 4
 	case theme.SizeNamePadding:
-		return 2
+		return 4
 	case theme.SizeNameScrollBar:
-		return 10
+		return 16
 	case theme.SizeNameScrollBarSmall:
 		return 3
 	case theme.SizeNameText:
 		return 10
+	case theme.SizeNameHeadingText:
+		return 24
+	case theme.SizeNameSubHeadingText:
+		return 18
 	case theme.SizeNameCaptionText:
-		return 8
+		return 11
 	case theme.SizeNameInputBorder:
 		return 1
+	case theme.SizeNameInputRadius:
+		return 5
+	case theme.SizeNameSelectionRadius:
+		return 3
 	}
-
 }
