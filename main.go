@@ -32,7 +32,7 @@ func main() {
 )
 
 var (
-	windowSize = fyne.NewSize(600., 800.)
+	windowSize = fyne.NewSize(800., 600.)
 
 	inputData = binding.NewString()
 	srcPane   fyne.CanvasObject
@@ -53,14 +53,9 @@ func main() {
 
 func loadui(w fyne.Window) fyne.CanvasObject {
 	var top, bottom, left, right, content fyne.CanvasObject
-	top = container.NewHBox(layout.NewSpacer(), widget.NewLabel(title))
 	initContent(w)
-	size := w.Canvas().Size()
-	if size.Width > size.Height { // Landscape
-		content = container.NewMax(container.NewHSplit(srcPane, destPane))
-	} else { // Portrait
-		content = container.NewMax(container.NewVSplit(srcPane, destPane))
-	}
+	// TODO: toggle button to switch layout
+	content = container.NewStack(container.NewHSplit(srcPane, destPane))
 	return container.NewBorder(top, bottom, left, right, content)
 }
 
@@ -68,7 +63,7 @@ func initContent(w fyne.Window) {
 	inputData.Set(srcPlaceholder)
 	entry := widget.NewEntryWithData(inputData)
 	entry.MultiLine = true
-	entry.Wrapping = fyne.TextTruncate
+	entry.Wrapping = fyne.TextWrapWord
 	entry.TextStyle = fyne.TextStyle{Monospace: true}
 	entry.OnChanged = func(s string) {
 		astTree, err := parse(s)
@@ -82,7 +77,7 @@ func initContent(w fyne.Window) {
 
 	result := widget.NewEntryWithData(outputData)
 	result.MultiLine = true
-	result.Wrapping = fyne.TextTruncate
+	result.Wrapping = fyne.TextWrapWord
 	result.TextStyle = fyne.TextStyle{Monospace: true}
 	result.Disable()
 	destPane = container.New(layout.NewPaddedLayout(), result)
